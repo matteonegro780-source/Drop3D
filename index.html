@@ -3,280 +3,689 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drop 3D - Progetti 3D Gratuiti</title>
+    <title>Drop 3D — Progetti 3D Gratuiti</title>
+    <meta name="description" content="Scarica gratuitamente progetti 3D ottimizzati per la stampa. Tutti i modelli testati e pronti all'uso.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
     <style>
+        /* =============================================
+           VARIABILI E RESET
+           ============================================= */
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2333;
+            --border: #30363d;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79c0ff;
+            --accent-glow: rgba(88, 166, 255, 0.15);
+            --red: #e94560;
+            --gradient: linear-gradient(135deg, #58a6ff, #a371f7);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background: #0a0a0a;
-            color: #ffffff;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* HERO SECTION */
+        /* =============================================
+           NAVBAR
+           ============================================= */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(13, 17, 23, 0.95);
+        }
+
+        .navbar-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo img {
+            height: 36px;
+        }
+
+        .navbar-logo span {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        .navbar-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .navbar-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .navbar-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .navbar-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .navbar-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        /* =============================================
+           HERO SECTION
+           ============================================= */
         .hero {
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);
-            position: relative;
-            overflow: hidden;
+            padding: 120px 24px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 80px;
         }
 
-        .logo {
-            width: 200px;
-            height: 200px;
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite;
+        .hero-text {
+            flex: 1;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .hero-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
         .hero h1 {
-            font-size: 4em;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            animation: fadeInUp 1s;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
         }
 
-        .hero p {
-            font-size: 1.5em;
-            margin: 20px 0;
-            opacity: 0.9;
-            animation: fadeInUp 1.5s;
+        .hero h1 .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin-bottom: 40px;
+            line-height: 1.8;
         }
 
-        /* ANIMAZIONE STAMPANTE 3D */
-        .printer-container {
-            margin-top: 50px;
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: var(--accent);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(88, 166, 255, 0.25);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: transparent;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border-radius: 12px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        /* Animazione stampante 3D */
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .printer-3d {
+            width: 400px;
+            height: 400px;
             position: relative;
-            animation: fadeInUp 2s;
+            perspective: 800px;
         }
 
-        .printer {
-            width: 300px;
-            height: 300px;
-            perspective: 1000px;
-        }
-
-        .printer-box {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            animation: rotate3d 8s linear infinite;
-        }
-
-        @keyframes rotate3d {
-            0% { transform: rotateY(0deg) rotateX(10deg); }
-            100% { transform: rotateY(360deg) rotateX(10deg); }
-        }
-
-        .printer-layer {
+        .printer-frame {
             position: absolute;
-            width: 200px;
-            height: 20px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            inset: 0;
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            transform: rotateY(-15deg) rotateX(5deg);
+            box-shadow: 
+                0 40px 80px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.05);
+        }
+
+        /* Guide verticali */
+        .printer-rail-left,
+        .printer-rail-right {
+            position: absolute;
+            width: 4px;
+            top: 30px;
+            bottom: 80px;
+            background: linear-gradient(to bottom, #444, #333);
+            border-radius: 2px;
+        }
+
+        .printer-rail-left { left: 40px; }
+        .printer-rail-right { right: 40px; }
+
+        /* Testina di stampa */
+        .print-head {
+            position: absolute;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
-            animation: printing 2s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            width: 100px;
+            height: 30px;
+            background: linear-gradient(to bottom, #555, #3a3a3a);
+            border-radius: 6px;
+            animation: headMove 4s ease-in-out infinite;
+            z-index: 5;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
 
-        @keyframes printing {
-            0%, 100% { bottom: 0; opacity: 0.3; }
-            50% { bottom: 150px; opacity: 1; }
+        .print-head::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 0 0 2px 2px;
+            box-shadow: 0 0 10px var(--accent), 0 0 30px rgba(88, 166, 255, 0.3);
+            animation: nozzleGlow 1s infinite;
         }
 
-        /* SEZIONE PROGETTI */
-        .projects {
-            padding: 100px 20px;
-            max-width: 1400px;
+        @keyframes headMove {
+            0%, 100% { left: 35%; }
+            25% { left: 65%; top: 60px; }
+            50% { left: 40%; top: 80px; }
+            75% { left: 60%; top: 100px; }
+        }
+
+        @keyframes nozzleGlow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Piatto di stampa */
+        .print-bed {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 12px;
+            background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Oggetto in stampa (layer by layer) */
+        .printed-object {
+            position: absolute;
+            bottom: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            background: var(--gradient);
+            border-radius: 4px 4px 0 0;
+            animation: buildObject 4s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+        }
+
+        @keyframes buildObject {
+            0% { height: 0; opacity: 0; }
+            10% { opacity: 1; }
+            80% { height: 120px; }
+            100% { height: 120px; opacity: 0.8; }
+        }
+
+        /* Layer lines */
+        .layer-lines {
+            position: absolute;
+            bottom: 52px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            overflow: hidden;
+        }
+
+        .layer-line {
+            width: 100%;
+            height: 3px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 1px;
+            animation: layerAppear 4s ease-in-out infinite;
+        }
+
+        /* Filamento */
+        .filament {
+            position: absolute;
+            top: 15px;
+            right: 30px;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--accent);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particelle */
+        .particles {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: particleFloat 3s infinite;
+            opacity: 0;
+        }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(0); }
+            20% { opacity: 0.8; }
+            100% { opacity: 0; transform: translateY(-60px) translateX(20px); }
+        }
+
+        /* =============================================
+           STATS BAR
+           ============================================= */
+        .stats-bar {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+            padding: 40px 24px;
+        }
+
+        .stats-inner {
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
         }
 
-        .projects h2 {
-            font-size: 3em;
+        .stat {
             text-align: center;
-            margin-bottom: 60px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .grid {
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* =============================================
+           SEZIONE PROGETTI
+           ============================================= */
+        .projects-section {
+            padding: 120px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+        }
+
+        .section-desc {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Project grid */
+        .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
         }
 
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent;
-            backdrop-filter: blur(10px);
-        }
-
-        .card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.4);
-            border-color: #8b5cf6;
-        }
-
-        .card h3 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-            color: #3b82f6;
-        }
-
-        .card p {
-            margin-bottom: 20px;
-            line-height: 1.6;
-            opacity: 0.8;
-        }
-
-        .download-btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
-        }
-
-        .download-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
-        }
-
-        /* SCROLL ANIMATIONS */
-        .scroll-reveal {
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
+            transform: translateY(40px);
         }
 
-        .scroll-reveal.active {
+        .project-card.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* FOOTER */
-        footer {
+        .project-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.3),
+                0 0 0 1px var(--accent),
+                0 0 40px rgba(88, 166, 255, 0.1);
+        }
+
+        .project-thumbnail {
+            width: 100%;
+            height: 220px;
+            background: var(--bg-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .project-card:hover .project-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .project-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 4px 12px;
+            background: rgba(13, 17, 23, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--accent);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+        }
+
+        .free-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 4px 12px;
+            background: rgba(46, 160, 67, 0.2);
+            border: 1px solid rgba(46, 160, 67, 0.3);
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #3fb950;
+        }
+
+        .project-body {
+            padding: 24px;
+        }
+
+        .project-body h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+
+        .project-body p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .project-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 20px;
+            background: var(--accent);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .download-link:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
+        }
+
+        /* =============================================
+           COME FUNZIONA
+           ============================================= */
+        .how-it-works {
+            padding: 120px 24px;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .how-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 64px;
+        }
+
+        .step-card {
             text-align: center;
-            padding: 50px 20px;
-            background: rgba(0, 0, 0, 0.5);
-            margin-top: 100px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <!-- LOGO (sostituisci con il tuo) -->
-        <img src="logo.png" alt="Drop 3D Logo" class="logo">
-        
-        <h1>DROP 3D</h1>
-        <p>Progetti 3D Gratuiti per Tutti</p>
-
-        <!-- ANIMAZIONE STAMPANTE 3D -->
-        <div class="printer-container">
-            <div class="printer">
-                <div class="printer-box">
-                    <div class="printer-layer" style="animation-delay: 0s;"></div>
-                    <div class="printer-layer" style="animation-delay: 0.3s;"></div>
-                    <div class="printer-layer" style="animation-delay: 0.6s;"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SEZIONE PROGETTI -->
-    <section class="projects">
-        <h2>📦 Progetti Disponibili</h2>
-        <div class="grid">
-
-            <div class="card scroll-reveal">
-                <h3>🎮 Supporto Controller</h3>
-                <p>Stand ergonomico per controller da gaming. Design minimalista e funzionale.</p>
-                <a href="https://www.makerworld.com/TUOLINK1" class="download-btn" target="_blank">
-                    ⬇️ Scarica Gratis
-                </a>
-            </div>
-
-            <div class="card scroll-reveal">
-                <h3>🖊️ Portapenne Modulare</h3>
-                <p>Sistema modulare per organizzare la scrivania. Personalizzabile e stampabile.</p>
-                <a href="https://www.makerworld.com/TUOLINK2" class="download-btn" target="_blank">
-                    ⬇️ Scarica Gratis
-                </a>
-            </div>
-
-            <div class="card scroll-reveal">
-                <h3>🔧 Tool Organizer</h3>
-                <p>Organizer per attrezzi da banco. Ottimizzato per spazi ridotti.</p>
-                <a href="https://www.makerworld.com/TUOLINK3" class="download-btn" target="_blank">
-                    ⬇️ Scarica Gratis
-                </a>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2024 Drop 3D - Tutti i progetti sono gratuiti e open source</p>
-        <p>Made with ❤️ for the Maker Community</p>
-    </footer>
-
-    <!-- SCRIPT PER ANIMAZIONI SCROLL -->
-    <script>
-        // Animazione scroll reveal
-        const reveals = document.querySelectorAll('.scroll-reveal');
-
-        function checkScroll() {
-            reveals.forEach(element => {
-                const elementTop = element.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                
-                if (elementTop < windowHeight - 100) {
-                    element.classList.add('active');
-                }
-            });
+            padding: 40px 24px;
+            border-radius: 16px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        window.addEventListener('scroll', checkScroll);
-        checkScroll(); // Controlla al caricamento
-    </script>
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-</body>
-</html>
+        .step-card:hover {
+            background: var(--bg-card);
+            border-color: var(--border);
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            background: var(--accent-glow);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            border-radius: 16px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 
