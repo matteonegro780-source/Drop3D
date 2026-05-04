@@ -73,9 +73,7 @@
         .logo-text {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #58a6ff, #a371f7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #ffffff; /* BIANCO */
             letter-spacing: -0.5px;
         }
 
@@ -207,7 +205,9 @@
             background: var(--accent-glow);
         }
 
-        /* STAMPANTE 3D */
+        /* =========================================
+           STAMPANTE 3D REALISTICA
+           ========================================= */
         .hero-visual {
             flex: 1;
             display: flex;
@@ -215,104 +215,445 @@
             align-items: center;
         }
 
-        .printer-3d {
-            width: 400px;
-            height: 400px;
+        .printer-container {
+            width: 450px;
+            height: 450px;
             position: relative;
-            perspective: 800px;
+            perspective: 1200px;
         }
 
-        .printer-frame {
-            position: absolute;
-            inset: 0;
-            border: 2px solid var(--border);
-            border-radius: 20px;
-            background: var(--bg-secondary);
-            transform: rotateY(-15deg) rotateX(5deg);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+        .printer-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg) rotateY(25deg);
         }
 
-        .printer-rail-left,
-        .printer-rail-right {
+        /* TELAIO PRINCIPALE */
+        .printer-body {
             position: absolute;
-            width: 4px;
-            top: 30px;
-            bottom: 80px;
-            background: linear-gradient(to bottom, #444, #333);
-            border-radius: 2px;
-        }
-
-        .printer-rail-left { left: 40px; }
-        .printer-rail-right { right: 40px; }
-
-        .print-head {
-            position: absolute;
-            top: 40px;
+            width: 280px;
+            height: 350px;
             left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 30px;
-            background: linear-gradient(to bottom, #555, #3a3a3a);
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 8px;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.8),
+                inset 0 2px 4px rgba(255,255,255,0.05),
+                inset 0 -2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* PANNELLO FRONTALE */
+        .printer-front {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 60px;
+            background: linear-gradient(to bottom, #333, #222);
             border-radius: 6px;
-            animation: headMove 4s ease-in-out infinite;
-            z-index: 5;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            gap: 10px;
         }
 
-        .print-head::after {
-            content: '';
+        .printer-screen {
+            width: 100px;
+            height: 35px;
+            background: linear-gradient(to bottom, #1a5f7a, #0d3b4d);
+            border-radius: 3px;
+            border: 2px solid #0a2a36;
+            box-shadow: inset 0 0 10px rgba(26, 95, 122, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen-glow {
             position: absolute;
-            bottom: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 0 0 2px 2px;
-            box-shadow: 0 0 10px var(--accent);
-            animation: nozzleGlow 1s infinite;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.3), transparent);
+            animation: screenScan 3s infinite;
         }
 
-        @keyframes headMove {
-            0%, 100% { left: 35%; }
-            25% { left: 65%; top: 60px; }
-            50% { left: 40%; top: 80px; }
-            75% { left: 60%; top: 100px; }
+        @keyframes screenScan {
+            0%, 100% { left: -100%; }
+            50% { left: 100%; }
         }
 
-        @keyframes nozzleGlow {
-            0%, 100% { opacity: 1; }
+        .printer-button {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff4444, #cc0000);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 -1px 2px rgba(0,0,0,0.3);
+            border: 1px solid #880000;
+        }
+
+        .printer-button.green {
+            background: radial-gradient(circle at 30% 30%, #44ff44, #00cc00);
+            border-color: #008800;
+            animation: buttonBlink 2s infinite;
+        }
+
+        @keyframes buttonBlink {
+            0%, 100% { opacity: 1; box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 0 8px rgba(68, 255, 68, 0.6); }
             50% { opacity: 0.5; }
         }
 
-        .print-bed {
+        /* GUIDE VERTICALI (Z-AXIS) */
+        .z-rail-left,
+        .z-rail-right {
             position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 12px;
-            background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
-            border-radius: 4px;
+            width: 12px;
+            height: 260px;
+            top: 90px;
+            background: linear-gradient(to right, #555, #666, #555);
+            border-radius: 6px;
+            box-shadow: 
+                0 0 10px rgba(0,0,0,0.5),
+                inset 1px 0 2px rgba(255,255,255,0.1),
+                inset -1px 0 2px rgba(0,0,0,0.3);
         }
 
-        .printed-object {
+        .z-rail-left { left: 15px; }
+        .z-rail-right { right: 15px; }
+
+        /* BARRA SUPERIORE */
+        .top-bar {
             position: absolute;
-            bottom: 52px;
+            top: 80px;
+            left: 15px;
+            right: 15px;
+            height: 18px;
+            background: linear-gradient(to bottom, #666, #555);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.6);
+        }
+
+        /* TESTINA DI STAMPA (EXTRUDER) */
+        .print-head {
+            position: absolute;
+            width: 70px;
+            height: 55px;
+            background: linear-gradient(145deg, #444, #333);
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.7);
+            animation: printHeadMove 8s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes printHeadMove {
+            0%, 100% { 
+                left: 30px; 
+                top: 120px; 
+            }
+            25% { 
+                left: 180px; 
+                top: 140px; 
+            }
+            50% { 
+                left: 50px; 
+                top: 180px; 
+            }
+            75% { 
+                left: 160px; 
+                top: 200px; 
+            }
+        }
+
+        /* Ventola raffreddamento */
+        .cooling-fan {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 22px;
+            height: 22px;
+            background: radial-gradient(circle, #222, #111);
+            border-radius: 50%;
+            border: 2px solid #555;
+        }
+
+        .cooling-fan::before {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: 
+                linear-gradient(45deg, transparent 45%, #333 45%, #333 55%, transparent 55%),
+                linear-gradient(-45deg, transparent 45%, #333 45%, #333 55%, transparent 55%);
+            border-radius: 50%;
+            animation: fanSpin 0.5s linear infinite;
+        }
+
+        @keyframes fanSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* UGELLO */
+        .nozzle {
+            position: absolute;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            background: linear-gradient(135deg, #58a6ff, #a371f7);
-            border-radius: 4px 4px 0 0;
-            animation: buildObject 4s ease-in-out infinite;
-            box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #c9a86a;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+        }
+
+        /* Luce UV ugello */
+        .nozzle-glow {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 15px var(--accent),
+                0 0 30px rgba(88, 166, 255, 0.5);
+            animation: nozzleHeat 1s ease-in-out infinite;
+        }
+
+        @keyframes nozzleHeat {
+            0%, 100% { 
+                opacity: 1; 
+                transform: translateX(-50%) scale(1);
+            }
+            50% { 
+                opacity: 0.6; 
+                transform: translateX(-50%) scale(0.8);
+            }
+        }
+
+        /* PIATTO DI STAMPA */
+        .print-bed {
+            position: absolute;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            height: 18px;
+            background: linear-gradient(to bottom, #3a3a3a, #2a2a2a, #1a1a1a);
+            border-radius: 6px;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.8),
+                inset 0 2px 4px rgba(255,255,255,0.05);
+            border: 1px solid #444;
+        }
+
+        .bed-surface {
+            position: absolute;
+            top: -2px;
+            left: 10px;
+            right: 10px;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(88, 166, 255, 0.1) 20%, 
+                rgba(88, 166, 255, 0.2) 50%, 
+                rgba(88, 166, 255, 0.1) 80%, 
+                transparent
+            );
+            border-radius: 2px;
+        }
+
+        /* OGGETTO IN STAMPA (layer by layer) */
+        .printed-object {
+            position: absolute;
+            bottom: 68px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            background: linear-gradient(to top, 
+                #58a6ff, 
+                #6bb3ff 20%, 
+                #7ec0ff 40%, 
+                #91cdff 60%, 
+                #a4daff 80%, 
+                #b7e7ff
+            );
+            border-radius: 8px 8px 0 0;
+            animation: buildObject 8s ease-in-out infinite;
+            box-shadow: 
+                0 0 20px rgba(88, 166, 255, 0.3),
+                0 -5px 15px rgba(88, 166, 255, 0.2);
+            position: relative;
         }
 
         @keyframes buildObject {
-            0% { height: 0; opacity: 0; }
-            10% { opacity: 1; }
-            80% { height: 120px; }
-            100% { height: 120px; opacity: 0.8; }
+            0% { 
+                height: 0; 
+                opacity: 0; 
+            }
+            5% { 
+                opacity: 1; 
+            }
+            85% { 
+                height: 140px; 
+            }
+            100% { 
+                height: 140px; 
+                opacity: 0.9; 
+            }
+        }
+
+        /* Layer lines realistiche */
+        .layer-lines {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                to top,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.03) 2px,
+                rgba(255, 255, 255, 0.03) 4px
+            );
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* BOBINA FILAMENTO */
+        .filament-spool {
+            position: absolute;
+            top: 10px;
+            right: -50px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #58a6ff, #4a90d9);
+            border-radius: 50%;
+            border: 6px solid #333;
+            box-shadow: 
+                0 4px 15px rgba(0,0,0,0.6),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            animation: spoolRotate 4s linear infinite;
+        }
+
+        .filament-spool::before {
+            content: '';
+            position: absolute;
+            inset: 15px;
+            background: #222;
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+        }
+
+        @keyframes spoolRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Filamento che esce */
+        .filament-line {
+            position: absolute;
+            top: 40px;
+            right: -20px;
+            width: 3px;
+            height: 80px;
+            background: linear-gradient(to bottom, #58a6ff, transparent);
+            border-radius: 2px;
+            opacity: 0.7;
+        }
+
+        /* BASE DELLA STAMPANTE */
+        .printer-base {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 30px;
+            background: linear-gradient(to bottom, #1a1a1a, #0d0d0d);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.9);
+        }
+
+        .printer-feet {
+            position: absolute;
+            bottom: -8px;
+            width: 25px;
+            height: 12px;
+            background: #222;
+            border-radius: 0 0 6px 6px;
+        }
+
+        .printer-feet:nth-child(1) { left: 20px; }
+        .printer-feet:nth-child(2) { right: 20px; }
+
+        /* PARTICELLE DI FILAMENTO */
+        .particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleFloat 3s infinite ease-out;
+        }
+
+        .particle:nth-child(1) { left: 45%; bottom: 120px; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 50%; bottom: 115px; animation-delay: 0.5s; }
+        .particle:nth-child(3) { left: 55%; bottom: 125px; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 48%; bottom: 118px; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 52%; bottom: 122px; animation-delay: 2s; }
+
+        @keyframes particleFloat {
+            0% { 
+                opacity: 0; 
+                transform: translateY(0) scale(1); 
+            }
+            20% { 
+                opacity: 0.8; 
+            }
+            100% { 
+                opacity: 0; 
+                transform: translateY(-50px) translateX(15px) scale(0.5); 
+            }
+        }
+
+        /* LED INDICATORI */
+        .status-leds {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .led {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #333;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .led.active {
+            background: #44ff44;
+            box-shadow: 0 0 8px #44ff44, inset 0 1px 2px rgba(255,255,255,0.3);
+            animation: ledPulse 2s infinite;
+        }
+
+        @keyframes ledPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         /* STATS */
@@ -514,9 +855,14 @@
                 font-size: 2.5rem;
             }
 
-            .printer-3d {
-                width: 280px;
-                height: 280px;
+            .printer-container {
+                width: 320px;
+                height: 320px;
+            }
+
+            .printer-body {
+                width: 200px;
+                height: 250px;
             }
 
             .navbar-links {
@@ -562,13 +908,73 @@
         </div>
 
         <div class="hero-visual">
-            <div class="printer-3d">
-                <div class="printer-frame">
-                    <div class="printer-rail-left"></div>
-                    <div class="printer-rail-right"></div>
-                    <div class="print-head"></div>
-                    <div class="printed-object"></div>
-                    <div class="print-bed"></div>
+            <div class="printer-container">
+                <div class="printer-3d">
+                    
+                    <!-- Corpo stampante -->
+                    <div class="printer-body">
+                        
+                        <!-- Pannello frontale -->
+                        <div class="printer-front">
+                            <div class="printer-screen">
+                                <div class="screen-glow"></div>
+                            </div>
+                            <div class="printer-button green"></div>
+                            <div class="printer-button"></div>
+                        </div>
+
+                        <!-- LED status -->
+                        <div class="status-leds">
+                            <div class="led active"></div>
+                            <div class="led"></div>
+                            <div class="led active"></div>
+                        </div>
+
+                        <!-- Guide verticali -->
+                        <div class="z-rail-left"></div>
+                        <div class="z-rail-right"></div>
+                        
+                        <!-- Barra superiore -->
+                        <div class="top-bar"></div>
+
+                        <!-- Testina di stampa -->
+                        <div class="print-head">
+                            <div class="cooling-fan"></div>
+                            <div class="nozzle"></div>
+                            <div class="nozzle-glow"></div>
+                        </div>
+
+                        <!-- Piatto di stampa -->
+                        <div class="print-bed">
+                            <div class="bed-surface"></div>
+                        </div>
+
+                        <!-- Oggetto in stampa -->
+                        <div class="printed-object">
+                            <div class="layer-lines"></div>
+                        </div>
+
+                        <!-- Particelle -->
+                        <div class="particles">
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                            <div class="particle"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bobina filamento -->
+                    <div class="filament-spool"></div>
+                    <div class="filament-line"></div>
+
+                    <!-- Base -->
+                    <div class="printer-base">
+                        <div class="printer-feet"></div>
+                        <div class="printer-feet"></div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -672,7 +1078,7 @@
         </div>
     </section>
 
-    <footer class="footer">
+    <footer class="footer" id="about">
         <p>© 2024 Drop 3D — Tutti i progetti sono gratuiti e open source.</p>
     </footer>
 
