@@ -4,16 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drop 3D — Progetti 3D Gratuiti</title>
-    <meta name="description" content="Scarica gratuitamente progetti 3D ottimizzati per la stampa. Tutti i modelli testati e pronti all'uso.">
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* =============================================
-           VARIABILI E RESET
-           ============================================= */
         :root {
             --bg-primary: #0d1117;
             --bg-secondary: #161b22;
@@ -24,8 +18,6 @@
             --accent: #58a6ff;
             --accent-hover: #79c0ff;
             --accent-glow: rgba(88, 166, 255, 0.15);
-            --red: #e94560;
-            --gradient: linear-gradient(135deg, #58a6ff, #a371f7);
         }
 
         * {
@@ -46,9 +38,7 @@
             overflow-x: hidden;
         }
 
-        /* =============================================
-           NAVBAR
-           ============================================= */
+        /* NAVBAR */
         .navbar {
             position: fixed;
             top: 0;
@@ -56,7 +46,6 @@
             z-index: 1000;
             background: rgba(13, 17, 23, 0.8);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             transition: all 0.3s ease;
         }
@@ -81,14 +70,12 @@
             text-decoration: none;
         }
 
-        .navbar-logo img {
-            height: 36px;
-        }
-
-        .navbar-logo span {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #58a6ff, #a371f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: -0.5px;
         }
 
@@ -104,49 +91,13 @@
             font-size: 0.875rem;
             font-weight: 500;
             transition: color 0.2s;
-            position: relative;
         }
 
         .navbar-links a:hover {
             color: var(--text-primary);
         }
 
-        .navbar-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .navbar-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Mobile menu */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 5px;
-        }
-
-        .menu-toggle span {
-            width: 24px;
-            height: 2px;
-            background: var(--text-primary);
-            transition: all 0.3s;
-        }
-
-        /* =============================================
-           HERO SECTION
-           ============================================= */
+        /* HERO */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -197,11 +148,10 @@
             margin-bottom: 24px;
         }
 
-        .hero h1 .gradient-text {
-            background: var(--gradient);
+        .gradient-text {
+            background: linear-gradient(135deg, #58a6ff, #a371f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
         .hero-description {
@@ -250,7 +200,6 @@
             font-weight: 600;
             font-size: 0.9rem;
             transition: all 0.3s;
-            border-radius: 12px;
         }
 
         .btn-secondary:hover {
@@ -258,7 +207,7 @@
             background: var(--accent-glow);
         }
 
-        /* Animazione stampante 3D */
+        /* STAMPANTE 3D */
         .hero-visual {
             flex: 1;
             display: flex;
@@ -280,12 +229,9 @@
             border-radius: 20px;
             background: var(--bg-secondary);
             transform: rotateY(-15deg) rotateX(5deg);
-            box-shadow: 
-                0 40px 80px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
         }
 
-        /* Guide verticali */
         .printer-rail-left,
         .printer-rail-right {
             position: absolute;
@@ -299,7 +245,6 @@
         .printer-rail-left { left: 40px; }
         .printer-rail-right { right: 40px; }
 
-        /* Testina di stampa */
         .print-head {
             position: absolute;
             top: 40px;
@@ -324,7 +269,7 @@
             height: 8px;
             background: var(--accent);
             border-radius: 0 0 2px 2px;
-            box-shadow: 0 0 10px var(--accent), 0 0 30px rgba(88, 166, 255, 0.3);
+            box-shadow: 0 0 10px var(--accent);
             animation: nozzleGlow 1s infinite;
         }
 
@@ -340,7 +285,6 @@
             50% { opacity: 0.5; }
         }
 
-        /* Piatto di stampa */
         .print-bed {
             position: absolute;
             bottom: 40px;
@@ -350,17 +294,15 @@
             height: 12px;
             background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
             border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* Oggetto in stampa (layer by layer) */
         .printed-object {
             position: absolute;
             bottom: 52px;
             left: 50%;
             transform: translateX(-50%);
             width: 60px;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #58a6ff, #a371f7);
             border-radius: 4px 4px 0 0;
             animation: buildObject 4s ease-in-out infinite;
             box-shadow: 0 0 20px rgba(88, 166, 255, 0.2);
@@ -373,69 +315,7 @@
             100% { height: 120px; opacity: 0.8; }
         }
 
-        /* Layer lines */
-        .layer-lines {
-            position: absolute;
-            bottom: 52px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            overflow: hidden;
-        }
-
-        .layer-line {
-            width: 100%;
-            height: 3px;
-            background: rgba(255,255,255,0.05);
-            margin-bottom: 1px;
-            animation: layerAppear 4s ease-in-out infinite;
-        }
-
-        /* Filamento */
-        .filament {
-            position: absolute;
-            top: 15px;
-            right: 30px;
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--accent);
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: spin 3s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Particelle */
-        .particles {
-            position: absolute;
-            inset: 0;
-            overflow: hidden;
-            border-radius: 20px;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: particleFloat 3s infinite;
-            opacity: 0;
-        }
-
-        @keyframes particleFloat {
-            0% { opacity: 0; transform: translateY(0); }
-            20% { opacity: 0.8; }
-            100% { opacity: 0; transform: translateY(-60px) translateX(20px); }
-        }
-
-        /* =============================================
-           STATS BAR
-           ============================================= */
+        /* STATS */
         .stats-bar {
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
@@ -458,7 +338,7 @@
         .stat-number {
             font-size: 2.5rem;
             font-weight: 800;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #58a6ff, #a371f7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -469,9 +349,7 @@
             margin-top: 4px;
         }
 
-        /* =============================================
-           SEZIONE PROGETTI
-           ============================================= */
+        /* PROGETTI */
         .projects-section {
             padding: 120px 24px;
             max-width: 1200px;
@@ -505,10 +383,9 @@
             margin: 0 auto;
         }
 
-        /* Project grid */
         .project-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 24px;
         }
 
@@ -517,42 +394,24 @@
             border: 1px solid var(--border);
             border-radius: 16px;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .project-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+            transition: all 0.4s;
         }
 
         .project-card:hover {
             transform: translateY(-8px);
             border-color: var(--accent);
-            box-shadow: 
-                0 20px 60px rgba(0,0,0,0.3),
-                0 0 0 1px var(--accent),
-                0 0 40px rgba(88, 166, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
 
         .project-thumbnail {
             width: 100%;
             height: 220px;
-            background: var(--bg-secondary);
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
             position: relative;
-            overflow: hidden;
-        }
-
-        .project-thumbnail img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .project-card:hover .project-thumbnail img {
-            transform: scale(1.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
         }
 
         .project-tag {
@@ -590,14 +449,12 @@
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 8px;
-            letter-spacing: -0.3px;
         }
 
         .project-body p {
             color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 20px;
-            line-height: 1.6;
         }
 
         .project-meta {
@@ -631,61 +488,208 @@
 
         .download-link:hover {
             background: var(--accent-hover);
-            box-shadow: 0 4px 15px rgba(88, 166, 255, 0.3);
         }
 
-        /* =============================================
-           COME FUNZIONA
-           ============================================= */
-        .how-it-works {
-            padding: 120px 24px;
-            background: var(--bg-secondary);
+        /* FOOTER */
+        .footer {
             border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .how-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 40px;
-            margin-top: 64px;
-        }
-
-        .step-card {
-            text-align: center;
             padding: 40px 24px;
-            border-radius: 16px;
-            border: 1px solid transparent;
-            transition: all 0.3s;
-            opacity: 0;
-            transform: translateY(30px);
+            text-align: center;
         }
 
-        .step-card.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .footer p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
         }
 
-        .step-card:hover {
-            background: var(--bg-card);
-            border-color: var(--border);
-        }
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 100px;
+            }
 
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 56px;
-            height: 56px;
-            background: var(--accent-glow);
-            border: 1px solid rgba(88, 166, 255, 0.2);
-            border-radius: 16px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .printer-3d {
+                width: 280px;
+                height: 280px;
+            }
+
+            .navbar-links {
+                display: none;
+            }
+
+            .stats-inner {
+                flex-wrap: wrap;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="#" class="navbar-logo">
+                <span class="logo-text">Drop3D</span>
+            </a>
+            <ul class="navbar-links">
+                <li><a href="#projects">Progetti</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-text">
+            <div class="hero-badge">Tutti i progetti gratuiti</div>
+            <h1>
+                Modelli 3D pronti<br>
+                da <span class="gradient-text">stampare</span>
+            </h1>
+            <p class="hero-description">
+                Scarica gratuitamente progetti 3D ottimizzati, testati e pronti 
+                per la tua stampante. Nessun costo, nessuna registrazione.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn-primary">↓ Esplora Progetti</a>
+                <a href="#about" class="btn-secondary">Scopri di più</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="printer-3d">
+                <div class="printer-frame">
+                    <div class="printer-rail-left"></div>
+                    <div class="printer-rail-right"></div>
+                    <div class="print-head"></div>
+                    <div class="printed-object"></div>
+                    <div class="print-bed"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Progetti</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Gratuiti</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">FDM</div>
+                <div class="stat-label">Ottimizzati</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Download</div>
+            </div>
+        </div>
+    </div>
+
+    <section class="projects-section" id="projects">
+        <div class="section-header">
+            <div class="section-label">Libreria</div>
+            <h2 class="section-title">Progetti Disponibili</h2>
+            <p class="section-desc">
+                Ogni modello è stato testato e ottimizzato per garantire risultati perfetti.
+            </p>
+        </div>
+
+        <div class="project-grid">
+
+            <div class="project-card">
+                <div class="project-thumbnail">
+                    🖨️
+                    <span class="project-tag">Accessori</span>
+                    <span class="free-badge">✓ Free</span>
+                </div>
+                <div class="project-body">
+                    <h3>Nome Progetto 1</h3>
+                    <p>Descrizione del progetto. Spiega caratteristiche e utilizzo.</p>
+                    <div class="project-meta">
+                        <div class="project-stats">
+                            <span>⏱ 2h</span>
+                            <span>📐 PLA</span>
+                        </div>
+                        <a href="https://makerworld.com/LINK" target="_blank" class="download-link">
+                            Scarica →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-thumbnail">
+                    🔧
+                    <span class="project-tag">Tool</span>
+                    <span class="free-badge">✓ Free</span>
+                </div>
+                <div class="project-body">
+                    <h3>Nome Progetto 2</h3>
+                    <p>Descrizione del progetto. Spiega caratteristiche e utilizzo.</p>
+                    <div class="project-meta">
+                        <div class="project-stats">
+                            <span>⏱ 3h</span>
+                            <span>📐 PETG</span>
+                        </div>
+                        <a href="https://makerworld.com/LINK" target="_blank" class="download-link">
+                            Scarica →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-thumbnail">
+                    📦
+                    <span class="project-tag">Organizer</span>
+                    <span class="free-badge">✓ Free</span>
+                </div>
+                <div class="project-body">
+                    <h3>Nome Progetto 3</h3>
+                    <p>Descrizione del progetto. Spiega caratteristiche e utilizzo.</p>
+                    <div class="project-meta">
+                        <div class="project-stats">
+                            <span>⏱ 1.5h</span>
+                            <span>📐 PLA</span>
+                        </div>
+                        <a href="https://makerworld.com/LINK" target="_blank" class="download-link">
+                            Scarica →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2024 Drop 3D — Tutti i progetti sono gratuiti e open source.</p>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', () => {
+            document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
